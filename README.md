@@ -1,5 +1,5 @@
-datasci_course_materials
+Sentiment Analysis on Twitter data
 ========================
 
-Public repository for course materials for the Data Science at Scale specialization offered by Coursera and the University of Washington.
+My solution to the course: Data Science at Scale specialization offered by Coursera and the University of Washington.
 
