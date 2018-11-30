@@ -25,15 +25,24 @@ def main():
     	tweets.append(json.loads(line))
 
     for t in tweets:
-    	sum = 0  
+        ratio = 0.0
+        positive = 0.0
+        negative = 1.0
     	if t.get('text', "") is not "":
     		list_text = t.get('text').encode('utf-8').split(" ")
 
+        unknown_term = []
         for text in list_text:
-              s = scores.get(text.lower(), 0)
-              sum += s
-      
-    	print sum
+            s = scores.get(text.lower(), 0)
+            if s == 0:
+                unknown_term.append(text)
+            elif s > 0:    
+                positive += 1
+            else:
+                negative += 1  
+            ratio = positive/negative
+        for term in unknown_term:
+            print term, ratio    
 
 if __name__ == '__main__':
     main()
