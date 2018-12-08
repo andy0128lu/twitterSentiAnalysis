@@ -1,0 +1,47 @@
+
+(g)
+SELECT A.row_num,
+   B.col_num,
+   SUM(A.value * B.value) AS value
+FROM A
+INNER JOIN B
+ON A.col_num = B.row_num
+GROUP BY A.row_num, B.col_num;
+
+//because we need all multiplication of any two elements, so we list them by "inner join on A.col_num = B.row_num"
+//then we times two values and group by A.row_num, B.col_num which is how we get the multiplication of two matrixs
+
+(h)
+SELECT 
+	A.docid,
+	B.docid,
+	SUM(A.count * B.count) AS v
+FROM frequency A 
+JOIN frequency B
+ON A.term = B.term AND A.docid < B.docid
+WHERE A.docid='10080_txt_crude' AND B.docid='17035_txt_earn'
+GROUP BY A.docid, B.docid;
+
+(i)
+CREATE VIEW qDoc AS
+SELECT * FROM frequency
+UNION
+SELECT 'q' as docid, 'washington' as term, 1 as count 
+UNION
+SELECT 'q' as docid, 'taxes' as term, 1 as count
+UNION 
+SELECT 'q' as docid, 'treasury' as term, 1 as count;
+
+SELECT 
+	A.docid,
+	B.docid,
+	SUM(A.count * B.count) AS v
+FROM qDOC A
+JOIN qDOC B
+ON A.term = B.term
+WHERE A.docid='q'
+GROUP BY A.docid, B.docid
+ORDER BY v ASC;
+
+
+
