@@ -1,6 +1,9 @@
 import MapReduce
 import sys
 
+"""
+Word Count Example in the Simple Python MapReduce Framework
+"""
 
 mr = MapReduce.MapReduce()
 
@@ -11,20 +14,16 @@ def mapper(record):
     # key: document identifier
     # value: document contents
     key = record[0]
-    value = record[1]
-    words = value.split()
-    for w in words:
-      mr.emit_intermediate(w.encode('utf-8'), key.encode('utf-8'))
+    friend = record[1]
+    mr.emit_intermediate(key, 1)
 
 def reducer(key, list_of_values):
     # key: word
-    # value: list of documents
-    """
-    output = []
-    output.append(key)
-    output.append(list(set(list_of_values)))
-    """
-    mr.emit((key, list(set(list_of_values))))
+    # value: list of occurrence counts
+    total = 0
+    for v in list_of_values:
+      total += v
+    mr.emit((key, total))
 
 # Do not modify below this line
 # =============================
